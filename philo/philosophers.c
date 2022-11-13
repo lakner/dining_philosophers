@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 15:57:57 by slakner           #+#    #+#             */
-/*   Updated: 2022/11/13 16:31:18 by slakner          ###   ########.fr       */
+/*   Updated: 2022/11/13 16:44:44 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 int	main(int argc, char **argv)
 {
-	t_simulation	sim;
+	t_simulation	*sim;
 
 	if (argc < 5 || argc > 6)
 	{
-		printf("Wrong number of arguments.\n")
+		printf("Wrong number of arguments.\n");
 		print_usage();
 		return (1);
 	}
 	sim = read_args(argc, argv);
-	return (eat_sleep_die(sim));
+	return (sim_table(sim));
 }
 
 void	print_usage(void)

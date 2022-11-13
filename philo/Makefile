@@ -1,5 +1,7 @@
 NAME	=	philo
 SRCS	=	philosophers.c \
+			sim.c \
+			eat_sleep_die.c \
 			parse.c
 
 ODIR	= obj

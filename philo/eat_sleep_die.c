@@ -6,8 +6,15 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 16:13:29 by slakner           #+#    #+#             */
-/*   Updated: 2022/11/13 16:13:40 by slakner          ###   ########.fr       */
+/*   Updated: 2022/11/13 17:48:57 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+void	*eat_sleep_die(void *philo)
+{
+	if (philo)
+	;
+	return (NULL);
+}

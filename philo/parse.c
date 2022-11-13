@@ -6,16 +6,16 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 16:02:22 by slakner           #+#    #+#             */
-/*   Updated: 2022/11/13 16:34:26 by slakner          ###   ########.fr       */
+/*   Updated: 2022/11/13 17:25:48 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-t_simulation	read_args(int argc, char **argv)
+t_simulation	*read_args(int argc, char **argv)
 {
 	int				i;
-	t_simulation	sim;
+	t_simulation	*sim;
 
 	i = 1;
 	while (i < argc)
@@ -24,12 +24,12 @@ t_simulation	read_args(int argc, char **argv)
 			return (NULL);
 		i++;
 	}
-	sim.number_philosophers = ft_atoi(argv[1]);
-	sim.time_die = ft_atoi(argv[2]);
-	sim.time_eat = ft_atoi(argv[3]);
-	sim.time_sleep = ft_atoi(argv[4]);
+	sim = init_sim(ft_atoi(argv[1]), ft_atoi(argv[2]),
+			ft_atoi(argv[3]), ft_atoi(argv[4]));
 	if (argc == 6)
-		sim.must_eat_times = ft_atoi(argv[5]);
+		sim->must_eat_times = ft_atoi(argv[5]);
+	else
+		sim->must_eat_times = 0;
 	return (sim);
 }
 
