@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 15:57:57 by slakner           #+#    #+#             */
-/*   Updated: 2022/11/13 16:44:44 by slakner          ###   ########.fr       */
+/*   Updated: 2022/12/21 21:28:52 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	main(int argc, char **argv)
 {
-	t_simulation	*sim;
+	t_sim	*sim;
 
 	if (argc < 5 || argc > 6)
 	{

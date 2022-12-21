@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   eat_sleep_die.c                                    :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/13 16:13:29 by slakner           #+#    #+#             */
-/*   Updated: 2022/12/21 21:33:06 by slakner          ###   ########.fr       */
+/*   Created: 2022/12/21 17:26:11 by slakner           #+#    #+#             */
+/*   Updated: 2022/12/21 18:12:33 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	announce_activity(t_philo *philo)
+void	error_exit(t_simulation *sim, int code, char *errstr)
 {
-	printf("Philosopher %d is thinking.\n", philo->n);
-}
-
-void	*eat_sleep_die(void *arg)
-{
-	t_philo	*philo;
-
-	philo = (t_philo *) arg;
-	if (philo)
-	{
-		announce_activity((t_philo *) philo);
-	}
-	return (NULL);
+	free_simulation(sim);
+	printf("Error: %s\n", errstr);
+	system("leaks philo");
+	exit (code);
 }

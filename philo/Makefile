@@ -2,13 +2,14 @@ NAME	=	philo
 SRCS	=	philosophers.c \
 			sim.c \
 			eat_sleep_die.c \
-			parse.c
+			parse.c \
+			error.c
 
 ODIR	= obj
 OBJS    = $(addprefix $(ODIR)/, $(SRCS:.c=.o))
 
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror -O0 -g3
 
 IFLAGS	= -Iincludes
 LEAKFLAGS = -LLeakSanitizer -llsan -lc++

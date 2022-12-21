@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 16:02:22 by slakner           #+#    #+#             */
-/*   Updated: 2022/11/13 17:25:48 by slakner          ###   ########.fr       */
+/*   Updated: 2022/12/21 18:08:31 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_simulation	*read_args(int argc, char **argv)
 
 int	validate_arg(char *arg)
 {
-	while (arg)
+	while (*arg)
 	{
 		if (*arg < '0' || *arg > '9')
 			return (0);
