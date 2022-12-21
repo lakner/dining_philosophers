@@ -6,16 +6,16 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 16:02:22 by slakner           #+#    #+#             */
-/*   Updated: 2022/12/21 18:08:31 by slakner          ###   ########.fr       */
+/*   Updated: 2022/12/21 21:35:32 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-t_simulation	*read_args(int argc, char **argv)
+t_sim	*read_args(int argc, char **argv)
 {
-	int				i;
-	t_simulation	*sim;
+	int		i;
+	t_sim	*sim;
 
 	i = 1;
 	while (i < argc)
