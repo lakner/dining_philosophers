@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 16:37:18 by slakner           #+#    #+#             */
-/*   Updated: 2022/12/21 22:26:33 by slakner          ###   ########.fr       */
+/*   Updated: 2022/12/21 23:20:58 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void	create_mutexes(t_sim *sim)
 
 	i = 0;
 	pthread_mutex_init(&(sim->m_curr), NULL);
-	pthread_mutex_lock(&(sim->m_curr));
 	sim->m_fork = malloc(sim->num_philos * sizeof(pthread_mutex_t *));
 	while (i < sim->num_philos)
 		pthread_mutex_init(&(sim->m_fork[i++]), NULL);
@@ -74,8 +73,9 @@ void	release_philos(t_sim *sim)
 		sim->philo[i].fork_left = 0;
 		sim->philo[i].fork_right = 0;
 		sim->philo[i].activity = THINKING;
+		sim->philo[i].sim = sim;
 		pthread_create(&(sim->philo[i].thread), NULL,
-			eat_sleep_die, &(sim->philo[i]));
+			&eat_sleep_die, &(sim->philo[i]));
 		i ++;
 	}
 }
@@ -83,7 +83,7 @@ void	release_philos(t_sim *sim)
 void	wait_for_the_end(t_sim *sim)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < sim->num_philos)
 	{	
