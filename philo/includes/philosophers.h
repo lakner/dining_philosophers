@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 20:27:36 by slakner           #+#    #+#             */
-/*   Updated: 2022/12/22 00:48:47 by slakner          ###   ########.fr       */
+/*   Updated: 2022/12/22 15:43:30 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ typedef struct s_simulation{
 	int				time_eat;
 	int				time_sleep;
 	int				must_eat_times;
-	struct timeval	time_start;
+	int				sim_has_started;
+	int				time_start;
 }	t_sim;
 
 void	print_usage(void);

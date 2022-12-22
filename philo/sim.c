@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 16:37:18 by slakner           #+#    #+#             */
-/*   Updated: 2022/12/22 00:50:36 by slakner          ###   ########.fr       */
+/*   Updated: 2022/12/22 15:44:52 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 
 int	sim_table(t_sim *sim)
 {
-	int				i;
-
-	i = 0;
-	if (gettimeofday(&(sim->time_start), NULL))
-		error_exit(sim, 1, "Error getting system time.");
 	prepare_forks(sim);
 	release_philos(sim);
 	wait_for_the_end(sim);
@@ -40,6 +35,7 @@ t_sim	*init_sim(int num_ph, int time_die, int time_eat, int time_sl)
 	sim->time_die = time_die;
 	sim->time_eat = time_eat;
 	sim->time_sleep = time_sl;
+	sim->sim_has_started = 0;
 	return (sim);
 }
 
@@ -75,7 +71,8 @@ void	prepare_philo(t_sim *sim, int i)
 
 void	release_philos(t_sim *sim)
 {
-	int	i;
+	int				i;
+	struct timeval	tv;
 
 	sim->philo = malloc(sim->num_philos * sizeof(t_philo));
 	if (!sim->philo)
@@ -88,6 +85,10 @@ void	release_philos(t_sim *sim)
 			&eat_sleep_die, &(sim->philo[i]));
 		i ++;
 	}
+	if (gettimeofday(&tv, NULL))
+		error_exit(sim, 1, "Error getting system time.");
+	sim->time_start = tv.tv_usec/1000;
+	sim->sim_has_started = 1;
 }
 
 void	wait_for_the_end(t_sim *sim)
