@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 20:27:36 by slakner           #+#    #+#             */
-/*   Updated: 2022/12/22 15:43:30 by slakner          ###   ########.fr       */
+/*   Updated: 2022/12/22 18:29:42 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,12 @@ typedef struct s_philo{
 	int					n;
 	int					time_to_die;
 	int					ate_n_times;
-	int					fork_left;
-	int					fork_right;
+	int					*fork_left;
+	int					*fork_right;
 	int					activity;
+	int					last_meal;
 	int					dead;
+	int					state_changed;
 	struct s_simulation	*sim;
 	pthread_t			thread;
 }	t_philo;
@@ -64,7 +66,7 @@ void	free_sim(t_sim *sim);
 void	*eat_sleep_die(void *philo);
 void	error_exit(t_sim *sim, int code, char *errstr);
 
-void	prepare_philo(t_sim *sim, int i);
+void	prepare_philos(t_sim *sim);
 void	prepare_forks(t_sim *sim);
 void	release_philos(t_sim *sim);
 void	wait_for_the_end(t_sim *sim);
