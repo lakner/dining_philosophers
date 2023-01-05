@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 20:27:36 by slakner           #+#    #+#             */
-/*   Updated: 2022/12/22 18:29:42 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/05 19:44:46 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_simulation{
 	int				*fork;
 	pthread_mutex_t	**m_fork;
 	pthread_mutex_t	m_curr;
+	pthread_mutex_t	m_roundabout;
 	//pthread_mutex_t	m_announcing;
 	int				curr;
 	int				*philo_dead;
