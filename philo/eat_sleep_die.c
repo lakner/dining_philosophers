@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 16:13:29 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/05 21:10:26 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/05 21:28:44 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	hungry(t_philo *philo)
 
 void	think(t_philo *philo)
 {
+	printf("%09d %d is thinking.\n", timestamp(philo->sim), philo->n);
 	while (!*(philo->fork_left) || !*(philo->fork_right))// || !hungry(philo))
 		usleep(1);
 }
@@ -87,60 +88,21 @@ void	eat(t_philo *philo)
 {
 	int		left_idx;
 	int		right_idx;
-	
+
 	left_idx = philo->n - 1;
 	right_idx = philo->n - 2;
 	if (right_idx < 0)
 		right_idx += philo->sim->num_philos;
 	if (philo->n % 2)
-	{
 		indulge_gluttony(philo, right_idx, left_idx);
-		// pthread_mutex_lock(philo->sim->m_fork[right_idx]);
-		// *(philo->fork_right) = 0;
-		// printf("%09d %d has taken a fork.\n", timestamp(philo->sim), philo->n);
-		// if (philo->fork_left)
-		// {
-		// 	pthread_mutex_lock(philo->sim->m_fork[left_idx]);
-		// 	*(philo->fork_left) = 0;
-		// 	printf("%09d %d has taken a fork.\n", timestamp(philo->sim), philo->n);
-		// 	philo->activity = EATING;
-		// 	eat_time = timestamp(philo->sim);
-		// 	philo->last_meal = eat_time;
-		// 	printf("%09d %d is eating.\n", eat_time, philo->n);
-		// 	usleep(philo->sim->time_eat * 1000);
-		// 	philo->ate_n_times++;
-		// 	*(philo->fork_left) = 1;
-		// 	pthread_mutex_unlock(philo->sim->m_fork[left_idx]);
-		// }
-		// *(philo->fork_right) = 1;
-		// pthread_mutex_unlock(philo->sim->m_fork[right_idx]);
-		philo->activity = SLEEPING;
-		printf("%09d %d is sleeping.\n", timestamp(philo->sim), philo->n);
-		usleep(philo->sim->time_sleep * 1000);
-		philo->activity = THINKING;
-	}
 	else
-	{
 		indulge_gluttony(philo, left_idx, right_idx);
-		// pthread_mutex_lock(philo->sim->m_fork[left_idx]);
-		// *(philo->fork_left) = 0;
-		// printf("%09d %d has taken a fork.\n", timestamp(philo->sim), philo->n);
-		// if (philo->fork_right)
-		// {
-		// 	pthread_mutex_lock(philo->sim->m_fork[right_idx]);
-		// 	*(philo->fork_right) = 0;
-		// 	printf("%09d %d has taken a fork.\n", timestamp(philo->sim), philo->n);
-		// 	philo->activity = EATING;
-		// 	eat_time = timestamp(philo->sim);
-		// 	philo->last_meal = eat_time;
-		// 	printf("%09d %d is eating.\n", eat_time, philo->n);
-		// 	usleep(philo->sim->time_eat * 1000);
-		// 	philo->ate_n_times++;
-		// 	*(philo->fork_right) = 1;
-		// 	pthread_mutex_unlock(philo->sim->m_fork[right_idx]);
-		// }
-		// *(philo->fork_left) = 1;
-		// pthread_mutex_unlock(philo->sim->m_fork[left_idx]);
+}
+
+void	nap(t_philo *philo)
+{
+	if (philo->activity == EATING)
+	{
 		philo->activity = SLEEPING;
 		printf("%09d %d is sleeping.\n", timestamp(philo->sim), philo->n);
 		usleep(philo->sim->time_sleep * 1000);
@@ -152,6 +114,7 @@ void	feast(t_philo *philo)
 {
 	think(philo);
 	eat(philo);
+	nap(philo);
 }
 
 void	*eat_sleep_die(void *arg)
@@ -164,15 +127,10 @@ void	*eat_sleep_die(void *arg)
 	// if (philo->n % 2 == 0)
 	// 	usleep(50);
 	while (philo)
-	{	
-		if (philo->activity == THINKING
-			&& (philo->time_to_die - (timestamp(philo->sim) - philo->last_meal) < (philo->sim->time_die * 3/2)))
+	// {	
+	// 	if (philo->activity == THINKING
+	//		&& (philo->time_to_die - (timestamp(philo->sim) - philo->last_meal) < (philo->sim->time_die * 3/2)))
 			feast(philo);
-		// else if (philo->activity == EATING)
-		// 	sleep();
-		// else if (philo->activity == SLEEPING)
-		// 	think();
-			//announce_activity((t_philo *) philo);
-	}
+	//}
 	return (NULL);
 }

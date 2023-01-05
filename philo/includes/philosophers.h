@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 20:27:36 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/05 19:44:46 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/05 21:28:06 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ struct	s_simulation;
 
 typedef struct s_philo{
 	int					n;
-	int					time_to_die;
+	int					time_to_die; // time in milliseconds
 	int					ate_n_times;
 	int					*fork_left;
 	int					*fork_right;
