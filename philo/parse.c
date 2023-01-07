@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 16:02:22 by slakner           #+#    #+#             */
-/*   Updated: 2022/12/22 18:56:00 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/07 16:44:28 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,9 @@ t_sim	*init_sim(int num_ph, int time_die, int time_eat, int time_sl)
 	if (!sim)
 		error_exit(sim, 2, "Malloc error.");
 	sim->num_philos = num_ph;
-	sim->curr = 1;
-	pthread_mutex_init(&(sim->m_curr), NULL);
+	// sim->curr = 1;
+	//pthread_mutex_init(&(sim->m_curr), NULL);
+	pthread_mutex_init(&(sim->m_dead), NULL);
 	sim->time_die = time_die;
 	sim->time_eat = time_eat;
 	sim->time_sleep = time_sl;

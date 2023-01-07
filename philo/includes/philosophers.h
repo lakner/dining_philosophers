@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 20:27:36 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/05 21:28:06 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/07 16:37:55 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_philo{
 	int					activity;
 	int					last_meal;
 	int					dead;
-	int					state_changed;
+	// int					state_changed;
 	struct s_simulation	*sim;
 	pthread_t			thread;
 }	t_philo;
@@ -42,11 +42,12 @@ typedef struct s_simulation{
 	t_philo			*philo;
 	int				*fork;
 	pthread_mutex_t	**m_fork;
-	pthread_mutex_t	m_curr;
-	pthread_mutex_t	m_roundabout;
+	// pthread_mutex_t	m_curr;
+	// pthread_mutex_t	m_roundabout;
 	//pthread_mutex_t	m_announcing;
-	int				curr;
-	int				*philo_dead;
+	// int				curr;
+	pthread_mutex_t m_dead;
+	int				philo_dead;
 	int				num_philos;
 	int				time_die;
 	int				time_eat;

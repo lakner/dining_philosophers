@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 16:37:18 by slakner           #+#    #+#             */
-/*   Updated: 2022/12/22 19:00:33 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/07 22:31:42 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ int	sim_table(t_sim *sim)
 	prepare_philos(sim);
 	prepare_forks(sim);
 	release_philos(sim);
-	wait_for_the_end(sim);
+	while (!sim->philo_dead)
+		;
 	free_sim(sim);
+	wait_for_the_end(sim);
 	system("leaks philo");
 	return (0);
 }
@@ -40,7 +42,7 @@ void	prepare_philos(t_sim *sim)
 		sim->philo[i].fork_right = NULL;
 		sim->philo[i].dead = 0;
 		sim->philo[i].last_meal = 0;
-		sim->philo[i].activity = THINKING;
+		sim->philo[i].activity = SLEEPING;
 		sim->philo[i].sim = sim;
 		i++;
 	}
@@ -89,9 +91,10 @@ void	wait_for_the_end(t_sim *sim)
 	int	i;
 
 	i = 0;
-	while (i < sim->num_philos)
+	while (i < sim->num_philos) // && !sim->philo_dead)
 	{	
-		pthread_join(sim->philo[i].thread, NULL);
+		pthread_detach(sim->philo[i].thread);
+		//pthread_join(sim->philo[i].thread, NULL);
 		i++;
 	}
 }
@@ -103,7 +106,8 @@ void	close_mutexes(t_sim *sim)
 	i = 0;
 	if (sim)
 	{
-		pthread_mutex_destroy(&(sim->m_curr));
+		// pthread_mutex_destroy(&(sim->m_curr));
+		pthread_mutex_destroy(&(sim->m_dead));
 		while (i < sim->num_philos)
 		{
 			pthread_mutex_destroy(sim->m_fork[i]);
