@@ -6,20 +6,19 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 16:13:29 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/08 21:07:06 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/08 22:38:43 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "philosophers.h"
 
-
 int	timestamp(t_sim *sim)
 {
 	struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
-	return (tv.tv_sec * 1000 + tv.tv_usec/1000 - sim->time_start);
+	return (tv.tv_sec * 1000 + tv.tv_usec / 1000 - sim->time_start);
 }
 
 int	die(t_philo *philo, int time_wait)
@@ -62,9 +61,9 @@ int	think(t_philo *philo)
 	}
 	while ((!*(philo->fork_left) || !*(philo->fork_right)))
 	{
-		if (kick_the_bucket(philo, 0))
+		if (kick_the_bucket(philo, 1))
 			return (1);
-		usleep(500);
+		usleep(1000);
 	}
 	return (0);
 }
@@ -96,14 +95,14 @@ int	stuff_face(t_philo *philo, int f_idx1, int f_idx2)
 	printf("%09d %d is eating.\n", eat_time, philo->n);
 	while (time_to_eat > 0)
 	{
-		if (kick_the_bucket(philo, 5))
+		if (kick_the_bucket(philo, 3))
 		{
 			pthread_mutex_unlock(philo->sim->m_fork[f_idx1]);
 			pthread_mutex_unlock(philo->sim->m_fork[f_idx2]);
 			return (1);
 		}
-		usleep(5000);
-		time_to_eat -= 5;
+		usleep(3000);
+		time_to_eat -= 3;
 	}
 	usleep(time_to_eat * 1000);
 	philo->ate_n_times++;
@@ -197,7 +196,7 @@ void	*eat_sleep_die(void *arg)
 
 	philo = (t_philo *) arg;
 	while (!(philo->sim->sim_has_started))
-		usleep(10);
+		usleep(200);
 	while (philo && philo->sim && !kick_the_bucket(philo, 0))
 	{	
 		if (kick_the_bucket(philo, 0))
