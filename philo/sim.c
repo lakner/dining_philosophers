@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 16:37:18 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/07 22:31:42 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/08 16:48:14 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ int	sim_table(t_sim *sim)
 	prepare_philos(sim);
 	prepare_forks(sim);
 	release_philos(sim);
-	while (!sim->philo_dead)
-		;
-	free_sim(sim);
+	// while (!sim->philo_dead)
+	// 	;
 	wait_for_the_end(sim);
+	free_sim(sim);
 	system("leaks philo");
 	return (0);
 }
@@ -93,8 +93,8 @@ void	wait_for_the_end(t_sim *sim)
 	i = 0;
 	while (i < sim->num_philos) // && !sim->philo_dead)
 	{	
-		pthread_detach(sim->philo[i].thread);
-		//pthread_join(sim->philo[i].thread, NULL);
+		//pthread_detach(sim->philo[i].thread);
+		pthread_join(sim->philo[i].thread, NULL);
 		i++;
 	}
 }
