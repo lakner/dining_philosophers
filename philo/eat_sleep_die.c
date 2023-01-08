@@ -148,37 +148,43 @@ int	eat(t_philo *philo)
 		return (indulge_gluttony(philo, left_idx, right_idx));
 }
 
-void	nap(t_philo *philo)
+int	nap(t_philo *philo)
 {
 	int	time_sleep;
 
 	if (!kick_the_bucket(philo, 0))
-		return ;
+		return (1);
 	time_sleep = philo->sim->time_sleep;
 	if (philo->activity == EATING)
 	{
 		philo->activity = SLEEPING;
 		if (kick_the_bucket(philo, philo->sim->time_sleep))
-			return ;
+			return (1);
 		printf("%09d %d is sleeping.\n", timestamp(philo->sim), philo->n);
 		while (time_sleep > 0 && !philo->sim->philo_dead)
 		{
 			usleep(5000);
 			time_sleep -= 5;
 		}
-		//philo->activity = THINKING;
 	}
+	return (0);
 }
 
-void	feast(t_philo *philo)
+int	feast(t_philo *philo)
 {
-	if (!kick_the_bucket(philo, 0))
-		think(philo);
-	if (!kick_the_bucket(philo, 0))
-		eat(philo);
-	if (!kick_the_bucket(philo, 0))
-		nap(philo);
-	return;
+	if (kick_the_bucket(philo, 0))
+		return (1);
+	if (think(philo))
+		return (1);
+	if (kick_the_bucket(philo, 0))
+		return (1);
+	if (eat(philo))
+		return (1);
+	if (kick_the_bucket(philo, 0))
+		return (1);
+	if (nap(philo))
+		return (1);
+	return (0);
 }
 
 void	*eat_sleep_die(void *arg)
@@ -188,14 +194,13 @@ void	*eat_sleep_die(void *arg)
 	philo = (t_philo *) arg;
 	while (!(philo->sim->sim_has_started))
 		usleep(10);
-	// if (philo->n % 2 == 0)
-	// 	usleep(50);
+	while (philo && philo->sim && !kick_the_bucket(philo, 0))
 	while (philo && !kick_the_bucket(philo, 0))
 	{	
-		// if (kick_the_bucket(philo, 0))
-		// 	return (NULL);
-		// else
-			feast(philo);
+		if (kick_the_bucket(philo, 0))
+			return (NULL);
+		if (feast(philo))
+			return (NULL);
 	}
 	
 	return (NULL);
