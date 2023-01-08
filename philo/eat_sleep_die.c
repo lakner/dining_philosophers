@@ -6,12 +6,13 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 16:13:29 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/08 19:12:42 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/08 19:31:11 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "philosophers.h"
+
 
 int	timestamp(t_sim *sim)
 {
