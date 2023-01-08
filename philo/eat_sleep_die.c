@@ -42,6 +42,10 @@ int	kick_the_bucket(t_philo *philo, int time_wait)
 	if (philo->sim->philo_dead)
 	{
 		pthread_mutex_unlock(&(philo->sim->m_dead));
+		if (philo->has_fork_idx1 >= 0)
+			return_fork(philo, philo->has_fork_idx1);
+		if (philo->has_fork_idx2 >= 0)
+			return_fork(philo, philo->has_fork_idx2);
 		return (1);
 	}
 	if ((timestamp(philo->sim) + time_wait) > (philo->last_meal + philo->time_to_die))
@@ -138,8 +142,8 @@ int	indulge_gluttony(t_philo *philo, int first, int second)
 	if (philo->sim->fork[first] && philo->sim->fork[second])
 	{
 		if (grab_fork(philo, first) || grab_fork(philo, second)
-			|| stuff_face(philo) || return_fork(philo, second)
-			|| return_fork(philo, first))
+			|| stuff_face(philo, first, second)
+			|| return_fork(philo, second) || return_fork(philo, first))
 		return (1);
 	}
 	return (0);
