@@ -161,10 +161,10 @@ int	nap(t_philo *philo)
 	if (philo->activity == EATING)
 	{
 		philo->activity = SLEEPING;
+		printf("%09d %d is sleeping.\n", timestamp(philo->sim), philo->n);
 		if (kick_the_bucket(philo, philo->sim->time_sleep))
 			return (1);
-		printf("%09d %d is sleeping.\n", timestamp(philo->sim), philo->n);
-		while (time_sleep > 0 && !kick_the_bucket(philo, 0))
+		while (time_sleep > 0 && !kick_the_bucket(philo, 5))
 		{
 			usleep(5000);
 			time_sleep -= 5;
