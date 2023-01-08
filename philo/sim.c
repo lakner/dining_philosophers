@@ -17,8 +17,8 @@ int	sim_table(t_sim *sim)
 	prepare_philos(sim);
 	prepare_forks(sim);
 	release_philos(sim);
-	// while (!sim->philo_dead)
-	// 	;
+	while (!sim->philo_dead && sim->num_philos)
+		;
 	wait_for_the_end(sim);
 	free_sim(sim);
 	system("leaks philo");
