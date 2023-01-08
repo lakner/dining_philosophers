@@ -112,7 +112,8 @@ int	stuff_face(t_philo *philo, int f_idx1, int f_idx2)
 		usleep(3000);
 		time_to_eat -= 3;
 	}
-	usleep(time_to_eat * 1000);
+	if (time_to_eat > 0)	
+		usleep(time_to_eat * 1000);
 	philo->ate_n_times++;
 	return (0);
 }
