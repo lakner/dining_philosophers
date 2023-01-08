@@ -30,10 +30,11 @@ typedef struct s_philo{
 	int					ate_n_times;
 	int					*fork_left;
 	int					*fork_right;
+	int					has_fork_idx1;
+	int					has_fork_idx2;
 	int					activity;
 	int					last_meal;
 	int					dead;
-	// int					state_changed;
 	struct s_simulation	*sim;
 	pthread_t			thread;
 }	t_philo;
@@ -42,10 +43,6 @@ typedef struct s_simulation{
 	t_philo			*philo;
 	int				*fork;
 	pthread_mutex_t	**m_fork;
-	// pthread_mutex_t	m_curr;
-	// pthread_mutex_t	m_roundabout;
-	//pthread_mutex_t	m_announcing;
-	// int				curr;
 	pthread_mutex_t m_dead;
 	int				philo_dead;
 	int				num_philos;
@@ -68,6 +65,8 @@ void	free_sim(t_sim *sim);
 void	*eat_sleep_die(void *philo);
 void	error_exit(t_sim *sim, int code, char *errstr);
 
+
+int		return_fork(t_philo *philo, int idx);
 void	prepare_philos(t_sim *sim);
 void	prepare_forks(t_sim *sim);
 void	release_philos(t_sim *sim);

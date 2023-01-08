@@ -40,6 +40,8 @@ void	prepare_philos(t_sim *sim)
 		sim->philo[i].ate_n_times = 0;
 		sim->philo[i].fork_left = NULL;
 		sim->philo[i].fork_right = NULL;
+		sim->philo[i].has_fork_idx1 = -1;
+		sim->philo[i].has_fork_idx2 = -1;
 		sim->philo[i].dead = 0;
 		sim->philo[i].last_meal = 0;
 		sim->philo[i].activity = SLEEPING;

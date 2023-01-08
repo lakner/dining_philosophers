@@ -29,6 +29,10 @@ int	die(t_philo *philo, int time_wait)
 	// 	return (1);
 	philo->sim->philo_dead = 1;
 	printf("%09d %d died.\n", timestamp(philo->sim), philo->n);
+	if (philo->has_fork_idx1 >= 0)
+		return_fork(philo, philo->has_fork_idx1);
+	if (philo->has_fork_idx2 >= 0)
+		return_fork(philo, philo->has_fork_idx2);
 	return (0);
 }
 
@@ -71,6 +75,10 @@ int	think(t_philo *philo)
 int	grab_fork(t_philo *philo, int idx)
 {
 	pthread_mutex_lock(philo->sim->m_fork[idx]);
+	if (philo->has_fork_idx1 < 0)
+		philo->has_fork_idx1 = idx;
+	else
+		philo->has_fork_idx2 = idx;
 	if (kick_the_bucket(philo, 0))
 	{
 		pthread_mutex_unlock(philo->sim->m_fork[idx]);
@@ -112,6 +120,10 @@ int	stuff_face(t_philo *philo, int f_idx1, int f_idx2)
 int	return_fork(t_philo *philo, int idx)
 {
 	philo->sim->fork[idx] = 1;
+	if (philo->has_fork_idx1 >= 0)
+		philo->has_fork_idx1 = -1;
+	else
+		philo->has_fork_idx2 = -1;
 	pthread_mutex_unlock(philo->sim->m_fork[idx]);
 	if (kick_the_bucket(philo, 0))
 		return (1);
