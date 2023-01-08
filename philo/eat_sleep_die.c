@@ -26,15 +26,10 @@ int	die(t_philo *philo, int time_wait)
 {
 	usleep(time_wait * 1000);
 	philo->dead = 1;
-	pthread_mutex_lock(&(philo->sim->m_dead));
 	if (philo->sim->philo_dead)
-	{
-		pthread_mutex_unlock(&(philo->sim->m_dead));
 		return (1);
-	}
 	philo->sim->philo_dead = 1;
 	printf("%09d %d died.\n", timestamp(philo->sim), philo->n);
-	pthread_mutex_unlock(&(philo->sim->m_dead));
 	return (0);
 }
 
@@ -46,12 +41,13 @@ int	kick_the_bucket(t_philo *philo, int time_wait)
 		pthread_mutex_unlock(&(philo->sim->m_dead));
 		return (1);
 	}
-	pthread_mutex_unlock(&(philo->sim->m_dead));
 	if ((timestamp(philo->sim) + time_wait) > (philo->last_meal + philo->time_to_die))
 	{
 		die(philo, (philo->last_meal + philo->time_to_die) - timestamp(philo->sim));
+		pthread_mutex_unlock(&(philo->sim->m_dead));
 		return (1);
 	}
+	pthread_mutex_unlock(&(philo->sim->m_dead));
 	return (0);
 }
 
