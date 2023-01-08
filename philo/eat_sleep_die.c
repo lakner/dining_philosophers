@@ -86,7 +86,7 @@ int	grab_fork(t_philo *philo, int idx)
 	return (0);
 }
 
-int	stuff_face(t_philo *philo)
+int	stuff_face(t_philo *philo, int f_idx1, int f_idx2)
 {
 	int		eat_time;
 	int		time_to_eat;
@@ -101,7 +101,11 @@ int	stuff_face(t_philo *philo)
 	while (time_to_eat > 0)
 	{
 		if (kick_the_bucket(philo, 5))
+		{
+			pthread_mutex_unlock(philo->sim->m_fork[f_idx1]);
+			pthread_mutex_unlock(philo->sim->m_fork[f_idx2]);
 			return (1);
+		}
 		usleep(5000);
 		time_to_eat -= 5;
 	}
