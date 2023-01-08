@@ -29,12 +29,12 @@ int	die(t_philo *philo, int time_wait)
 	pthread_mutex_lock(&(philo->sim->m_dead));
 	if (philo->sim->philo_dead)
 	{
-		printf("Someone else dead already.");
+		pthread_mutex_unlock(&(philo->sim->m_dead));
 		return (1);
 	}
 	philo->sim->philo_dead = 1;
 	printf("%09d %d died.\n", timestamp(philo->sim), philo->n);
-	unlock_all_the_mutex(philo->sim);
+	pthread_mutex_unlock(&(philo->sim->m_dead));
 	return (0);
 }
 
