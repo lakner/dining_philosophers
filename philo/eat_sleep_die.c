@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 16:13:29 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/08 19:31:11 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/08 21:07:06 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,38 +19,7 @@ int	timestamp(t_sim *sim)
 	struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
-	//printf("timestamp: %d\n", (tv.tv_usec/1000) - sim->time_start);
 	return (tv.tv_sec * 1000 + tv.tv_usec/1000 - sim->time_start);
-}
-
-// void	announce_activity(t_philo *philo)
-// {
-// 	while (philo->sim->curr != philo->n || !philo->sim->sim_has_started)
-// 		usleep(1);
-// 	pthread_mutex_lock(&(philo->sim->m_curr));
-// 	if (philo->n == 500)
-// 		printf("%09d %d is thinking.\n", timestamp(philo->sim), philo->n);
-// 	philo->sim->curr = (philo->sim->curr % philo->sim->num_philos) + 1; 
-// 	pthread_mutex_unlock(&(philo->sim->m_curr));
-// }
-
-// void	update_time_since_last_meal(t_philo *philo)
-// {
-	
-// }
-
-
-void	unlock_all_the_mutex(t_sim *sim)
-{
-	int	n;
-
-	n = 0;
-	pthread_mutex_unlock(&(sim->m_dead));
-	while (n < sim->num_philos - 1)
-	{
-		pthread_mutex_unlock(sim->m_fork[n]);
-		n ++;
-	}
 }
 
 int	die(t_philo *philo, int time_wait)
@@ -80,13 +49,6 @@ int	kick_the_bucket(t_philo *philo, int time_wait)
 	}
 	return (0);
 }
-
-// int	hungry(t_philo *philo)
-// {
-// 	if (philo->time_to_die < (philo->last_meal * 3 / 2))
-// 		return (1);
-// 	return (0);
-// q}
 
 int	think(t_philo *philo)
 {
