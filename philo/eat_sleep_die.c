@@ -40,8 +40,13 @@ int	die(t_philo *philo, int time_wait)
 
 int	kick_the_bucket(t_philo *philo, int time_wait)
 {
+	pthread_mutex_lock(&(philo->sim->m_dead));
 	if (philo->sim->philo_dead)
+	{
+		pthread_mutex_unlock(&(philo->sim->m_dead));
 		return (1);
+	}
+	pthread_mutex_unlock(&(philo->sim->m_dead));
 	if ((timestamp(philo->sim) + time_wait) > (philo->last_meal + philo->time_to_die))
 	{
 		die(philo, (philo->last_meal + philo->time_to_die) - timestamp(philo->sim));
