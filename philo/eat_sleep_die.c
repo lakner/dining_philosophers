@@ -25,8 +25,8 @@ int	die(t_philo *philo, int time_wait)
 {
 	usleep(time_wait * 1000);
 	philo->dead = 1;
-	if (philo->sim->philo_dead)
-		return (1);
+	// if (philo->sim->philo_dead)
+	// 	return (1);
 	philo->sim->philo_dead = 1;
 	printf("%09d %d died.\n", timestamp(philo->sim), philo->n);
 	return (0);
