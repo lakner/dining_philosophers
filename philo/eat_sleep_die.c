@@ -27,11 +27,6 @@ int	die(t_philo *philo, int time_wait)
 	philo->dead = 1;
 	philo->sim->philo_dead = 1;
 	printf("%09d %d died.\n", timestamp(philo->sim), philo->n);
-	pthread_mutex_unlock(&(philo->sim->m_dead));
-	if (philo->has_fork_idx1 >= 0)
-		return_fork(philo, philo->has_fork_idx1);
-	if (philo->has_fork_idx2 >= 0)
-		return_fork(philo, philo->has_fork_idx2);
 	return (0);
 }
 
@@ -47,9 +42,16 @@ int	kick_the_bucket(t_philo *philo, int time_wait)
 			return_fork(philo, philo->has_fork_idx2);
 		return (1);
 	}
-	if ((timestamp(philo->sim) + time_wait) > (philo->last_meal + philo->time_to_die))
+	if ((timestamp(philo->sim) + time_wait)
+		> (philo->last_meal + philo->time_to_die))
 	{
-		die(philo, (philo->last_meal + philo->time_to_die) - timestamp(philo->sim));
+		die(philo,
+			(philo->last_meal + philo->time_to_die) - timestamp(philo->sim));
+		pthread_mutex_unlock(&(philo->sim->m_dead));
+		if (philo->has_fork_idx1 >= 0)
+			return_fork(philo, philo->has_fork_idx1);
+		if (philo->has_fork_idx2 >= 0)
+			return_fork(philo, philo->has_fork_idx2);
 		return (1);
 	}
 	pthread_mutex_unlock(&(philo->sim->m_dead));
