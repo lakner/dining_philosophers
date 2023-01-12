@@ -130,8 +130,6 @@ int	return_fork(t_philo *philo, int idx)
 	else
 		philo->has_fork_idx2 = -1;
 	pthread_mutex_unlock(philo->sim->m_fork[idx]);
-	if (kick_the_bucket(philo, 0))
-		return (1);
 	return (0);
 }
 
@@ -215,12 +213,9 @@ void	*eat_sleep_die(void *arg)
 	while (!(philo->sim->sim_has_started))
 		usleep(200);
 	while (philo && philo->sim && !kick_the_bucket(philo, 0))
-	{	
-		if (kick_the_bucket(philo, 0))
-			return (NULL);
+	{
 		if (feast(philo))
 			return (NULL);
 	}
-	
 	return (NULL);
 }
