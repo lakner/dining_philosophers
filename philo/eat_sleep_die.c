@@ -83,7 +83,7 @@ int	grab_fork(t_philo *philo, int idx)
 		philo->has_fork_idx2 = idx;
 	if (kick_the_bucket(philo, 0))
 	{
-		pthread_mutex_unlock(philo->sim->m_fork[idx]);
+		//pthread_mutex_unlock(philo->sim->m_fork[idx]);
 		return (1);
 	}
 	printf("%09d %d has taken a fork.\n", timestamp(philo->sim), philo->n);
