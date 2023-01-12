@@ -68,11 +68,7 @@ int	think(t_philo *philo)
 		philo->activity = THINKING;
 	}
 	while ((!*(philo->fork_left) || !*(philo->fork_right)))
-	{
-		if (kick_the_bucket(philo, 1))
-			return (1);
-		usleep(1000);
-	}
+		usleep(200);
 	return (0);
 }
 
@@ -93,7 +89,7 @@ int	grab_fork(t_philo *philo, int idx)
 	return (0);
 }
 
-int	stuff_face(t_philo *philo, int f_idx1, int f_idx2)
+int	stuff_face(t_philo *philo)
 {
 	int		eat_time;
 	int		time_to_eat;
@@ -105,19 +101,21 @@ int	stuff_face(t_philo *philo, int f_idx1, int f_idx2)
 	time_to_eat = philo->sim->time_eat;
 	philo->last_meal = eat_time;
 	printf("%09d %d is eating.\n", eat_time, philo->n);
-	while (time_to_eat > 0)
-	{
-		if (kick_the_bucket(philo, 3))
-		{
-			pthread_mutex_unlock(philo->sim->m_fork[f_idx1]);
-			pthread_mutex_unlock(philo->sim->m_fork[f_idx2]);
-			return (1);
-		}
-		usleep(3000);
-		time_to_eat -= 3;
-	}
-	if (time_to_eat > 0)	
-		usleep(time_to_eat * 1000);
+	if (kick_the_bucket(philo, time_to_eat))
+		return(1);
+	// while (time_to_eat > 0)
+	// {
+	// 	// if (kick_the_bucket(philo, 25))
+	// 	// {
+	// 	// 	// pthread_mutex_unlock(philo->sim->m_fork[f_idx1]);
+	// 	// 	// pthread_mutex_unlock(philo->sim->m_fork[f_idx2]);
+	// 	// 	return (1);
+	// 	// }
+	// 	usleep(25000);
+	// 	time_to_eat -= 25;
+	// }
+	// if (time_to_eat > 0)
+	usleep(time_to_eat * 1000);
 	philo->ate_n_times++;
 	return (0);
 }
@@ -140,7 +138,7 @@ int	indulge_gluttony(t_philo *philo, int first, int second)
 	if (philo->sim->fork[first] && philo->sim->fork[second])
 	{
 		if (grab_fork(philo, first) || grab_fork(philo, second)
-			|| stuff_face(philo, first, second)
+			|| stuff_face(philo)
 			|| return_fork(philo, second) || return_fork(philo, first))
 		return (1);
 	}
@@ -179,11 +177,7 @@ int	nap(t_philo *philo)
 		printf("%09d %d is sleeping.\n", timestamp(philo->sim), philo->n);
 		if (kick_the_bucket(philo, philo->sim->time_sleep))
 			return (1);
-		while (time_sleep > 0 && !kick_the_bucket(philo, 5))
-		{
-			usleep(5000);
-			time_sleep -= 5;
-		}
+		usleep(time_sleep * 1000);
 	}
 	return (0);
 }
