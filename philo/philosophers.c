@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 15:57:57 by slakner           #+#    #+#             */
-/*   Updated: 2022/12/21 21:28:52 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/13 20:47:21 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	sim = read_args(argc, argv);
+	if (!sim)
+	{
+		printf("Error reading simulation parameters.\n");
+		print_usage();
+		return (1);
+	}
 	return (sim_table(sim));
 }
 
