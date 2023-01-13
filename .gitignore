@@ -2,3 +2,5 @@
 *.o
 
 philo/philo
+
+philo/LazyPhilosophersTester/
