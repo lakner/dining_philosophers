@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 20:27:36 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/13 22:41:30 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/13 23:01:53 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ typedef struct s_simulation{
 	int				must_eat_times;
 	int				sim_has_started;
 	long			time_start;
+	pthread_mutex_t	m_full;
+	int				num_philos_full;
 }	t_sim;
 
 void	print_usage(void);

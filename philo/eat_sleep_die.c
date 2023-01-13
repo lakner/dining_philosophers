@@ -194,6 +194,13 @@ int	feast(t_philo *philo)
 		return (1);
 	if (kick_the_bucket(philo, 0))
 		return (1);
+	if (philo->ate_n_times == philo->sim->must_eat_times)
+	{
+		pthread_mutex_lock(&(philo->sim->m_full));
+		philo->sim->num_philos_full ++;
+		pthread_mutex_unlock(&(philo->sim->m_full));
+		return (1);
+	}
 	if (nap(philo))
 		return (1);
 	return (0);
