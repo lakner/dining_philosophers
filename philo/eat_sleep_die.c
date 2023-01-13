@@ -6,14 +6,14 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 16:13:29 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/13 22:36:38 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/13 22:42:07 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "philosophers.h"
 
-int	timestamp(t_sim *sim)
+long	timestamp(t_sim *sim)
 {
 	struct timeval	tv;
 
@@ -37,7 +37,7 @@ int	die(t_philo *philo, int time_wait)
 	wait_for(philo->sim, time_wait);
 	philo->dead = 1;
 	philo->sim->philo_dead = 1;
-	printf("%09d %d died.\n", timestamp(philo->sim), philo->n);
+	printf("%012ld %d died.\n", timestamp(philo->sim)/1000, philo->n);
 	return (0);
 }
 
@@ -75,7 +75,7 @@ int	think(t_philo *philo)
 		return (1);
 	if (philo->activity != THINKING)
 	{
-		printf("%09d %d is thinking.\n", timestamp(philo->sim)/1000, philo->n);
+		printf("%012ld %d is thinking.\n", timestamp(philo->sim)/1000, philo->n);
 		philo->activity = THINKING;
 	}
 	while ((!*(philo->fork_left) || !*(philo->fork_right)))// || !hungry(philo))
@@ -95,19 +95,16 @@ int	grab_fork(t_philo *philo, int idx)
 	else
 		philo->has_fork_idx2 = idx;
 	if (kick_the_bucket(philo, 0))
-	{
-		//pthread_mutex_unlock(philo->sim->m_fork[idx]);
 		return (1);
-	}
-	printf("%09d %d has taken a fork.\n", timestamp(philo->sim)/1000, philo->n);
+	printf("%012ld %d has taken a fork.\n", timestamp(philo->sim)/1000, philo->n);
 	philo->sim->fork[idx] = 0;
 	return (0);
 }
 
 int	stuff_face(t_philo *philo)
 {
-	int		eat_time;
-	int		time_to_eat;
+	long		eat_time;
+	long		time_to_eat;
 
 	if (kick_the_bucket(philo, 0))
 		return (1);
@@ -115,7 +112,7 @@ int	stuff_face(t_philo *philo)
 	eat_time = timestamp(philo->sim);
 	time_to_eat = philo->sim->time_eat;
 	philo->last_meal = eat_time;
-	printf("%09d %d is eating.\n", eat_time/1000, philo->n);
+	printf("%012ld %d is eating.\n", eat_time/1000, philo->n);
 	if (kick_the_bucket(philo, time_to_eat))
 		return(1);
 	wait_for(philo->sim, time_to_eat);
@@ -177,7 +174,7 @@ int	nap(t_philo *philo)
 	if (philo->activity == EATING)
 	{
 		philo->activity = SLEEPING;
-		printf("%09d %d is sleeping.\n", timestamp(philo->sim)/1000, philo->n);
+		printf("%012ld %d is sleeping.\n", timestamp(philo->sim)/1000, philo->n);
 		if (kick_the_bucket(philo, philo->sim->time_sleep))
 			return (1);
 		wait_for(philo->sim, time_sleep);

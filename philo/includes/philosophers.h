@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 20:27:36 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/13 22:32:40 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/13 22:41:30 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,15 @@ typedef struct s_simulation{
 	t_philo			*philo;
 	int				*fork;
 	pthread_mutex_t	**m_fork;
-	pthread_mutex_t m_dead;
+	pthread_mutex_t	m_dead;
 	int				philo_dead;
 	int				num_philos;
-	int				time_die;
-	int				time_eat;
-	int				time_sleep;
+	long			time_die;
+	long			time_eat;
+	long			time_sleep;
 	int				must_eat_times;
 	int				sim_has_started;
-	int				time_start;
+	long			time_start;
 }	t_sim;
 
 void	print_usage(void);
@@ -64,8 +64,8 @@ t_sim	*init_sim(int num_ph, int time_die, int time_eat, int time_sl);
 void	free_sim(t_sim *sim);
 void	*eat_sleep_die(void *philo);
 void	error_exit(t_sim *sim, int code, char *errstr);
+long	timestamp(t_sim *sim);
 
-int		timestamp(t_sim *sim);
 int		return_fork(t_philo *philo, int idx);
 void	prepare_philos(t_sim *sim);
 void	prepare_forks(t_sim *sim);
