@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 20:27:36 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/07 16:37:55 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/13 22:32:40 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	free_sim(t_sim *sim);
 void	*eat_sleep_die(void *philo);
 void	error_exit(t_sim *sim, int code, char *errstr);
 
-
+int		timestamp(t_sim *sim);
 int		return_fork(t_philo *philo, int idx);
 void	prepare_philos(t_sim *sim);
 void	prepare_forks(t_sim *sim);

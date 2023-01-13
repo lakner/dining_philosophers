@@ -73,7 +73,7 @@ void	prepare_forks(t_sim *sim)
 void	release_philos(t_sim *sim)
 {
 	int				i;
-	struct timeval	tv;
+	//struct timeval	tv;
 
 	i = 0;
 	while (i < sim->num_philos)
@@ -82,9 +82,11 @@ void	release_philos(t_sim *sim)
 			&eat_sleep_die, &(sim->philo[i]));
 		i ++;
 	}
-	if (gettimeofday(&tv, NULL))
-		error_exit(sim, 1, "Error getting system time.");
-	sim->time_start = tv.tv_sec * 1000 + tv.tv_usec/1000;
+	// if (gettimeofday(&tv, NULL))
+	// 	error_exit(sim, 1, "Error getting system time.");
+	//sim->time_start = tv.tv_sec * 1000 * + tv.tv_usec/1000;
+	sim->time_start = 0;
+	sim->time_start = timestamp(sim);
 	sim->sim_has_started = 1;
 }
 

@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 16:02:22 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/07 16:44:28 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/13 22:11:30 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ t_sim	*init_sim(int num_ph, int time_die, int time_eat, int time_sl)
 	// sim->curr = 1;
 	//pthread_mutex_init(&(sim->m_curr), NULL);
 	pthread_mutex_init(&(sim->m_dead), NULL);
-	sim->time_die = time_die;
-	sim->time_eat = time_eat;
-	sim->time_sleep = time_sl;
+	sim->time_die = time_die * 1000;
+	sim->time_eat = time_eat * 1000;
+	sim->time_sleep = time_sl * 1000;
 	sim->sim_has_started = 0;
 	return (sim);
 }
