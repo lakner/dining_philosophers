@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 20:27:36 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/14 18:42:43 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/14 22:47:26 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ typedef struct s_simulation{
 	pthread_mutex_t	m_full;
 	int				num_philos_full;
 	pthread_mutex_t	m_speak;
+	pthread_mutex_t	m_start;
+	long			time_start;
+	int				sim_has_started;
 	long			time_die;
 	long			time_eat;
 	long			time_sleep;
 	int				must_eat_times;
-	int				sim_has_started;
-	long			time_start;
-
 }	t_sim;
 
 /* philosophers.c */
@@ -90,7 +90,7 @@ void	*eat_sleep_die(void *philo);
 void	say(t_philo *philo, long timestamp, char *msg);
 
 /* eat.c */
-int		hungry(t_philo *philo);
+int		eat(t_philo *philo);
 int		grab_fork(t_philo *philo, int idx);
 int		stuff_face(t_philo *philo);
 int		return_fork(t_philo *philo, int idx);
@@ -102,6 +102,5 @@ int		kick_the_bucket(t_philo *philo, int time_wait);
 
 /* error.c */
 void	error_exit(t_sim *sim, int code, char *errstr);
-
 
 #endif

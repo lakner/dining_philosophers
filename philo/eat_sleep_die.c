@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 16:13:29 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/14 18:47:47 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/14 23:18:30 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ int	think(t_philo *philo)
 		return (1);
 	if (philo->activity != THINKING)
 	{
-		say(philo, timestamp(philo->sim)/1000, "is thinking.");
+		say(philo, timestamp(philo->sim) / 1000, "is thinking.");
 		philo->activity = THINKING;
 	}
-	while ((!*(philo->fork_left) || !*(philo->fork_right)) || !hungry(philo))
+	while ((!*(philo->fork_left) || !*(philo->fork_right)))
 	{
 		if (kick_the_bucket(philo, 0))
 			return (1);
-		wait_for(philo->sim, 1);
+		wait_for(philo->sim, 50);
 	}
 	return (0);
 }
@@ -43,8 +43,6 @@ int	nap(t_philo *philo)
 {
 	int	time_sleep;
 
-	if (kick_the_bucket(philo, 0))
-		return (1);
 	time_sleep = philo->sim->time_sleep;
 	if (philo->activity == EATING)
 	{
@@ -55,23 +53,6 @@ int	nap(t_philo *philo)
 		wait_for(philo->sim, time_sleep);
 	}
 	return (0);
-}
-
-int	eat(t_philo *philo)
-{
-	int		left_idx;
-	int		right_idx;
-
-	left_idx = philo->n - 1;
-	right_idx = philo->n - 2;
-	if (right_idx < 0)
-		right_idx += philo->sim->num_philos;
-	if (right_idx == left_idx)
-		return (die(philo, philo->time_to_die));
-	if (philo->n % 2)
-		return (indulge_gluttony(philo, right_idx, left_idx));
-	else
-		return (indulge_gluttony(philo, left_idx, right_idx));
 }
 
 int	feast(t_philo *philo)
@@ -97,8 +78,12 @@ void	*eat_sleep_die(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *) arg;
+	pthread_mutex_lock(&(philo->sim->m_start));
+	pthread_mutex_unlock(&(philo->sim->m_start));
 	while (!(philo->sim->sim_has_started))
-		usleep(200);
+		wait_for(philo->sim, 1);
+	if (!(philo->n % 2))
+		wait_for(philo->sim, philo->sim->time_eat / 2);
 	while (philo && philo->sim && !kick_the_bucket(philo, 0))
 	{
 		if (feast(philo))

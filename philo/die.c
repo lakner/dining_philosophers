@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 18:29:39 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/14 19:12:12 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/14 19:21:31 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	die(t_philo *philo, int time_wait)
 	wait_for(philo->sim, time_wait);
 	philo->dead = 1;
 	philo->sim->philo_dead = 1;
-	printf("%12ld %d died.\n", timestamp(philo->sim) / 1000, philo->n);
+	printf("%012ld %d died.\n", timestamp(philo->sim) / 1000, philo->n);
 	return (0);
 }
 

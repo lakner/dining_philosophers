@@ -6,22 +6,41 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 18:32:25 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/14 18:49:37 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/14 23:04:03 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-// checks if philo just ate
-int	hungry(t_philo *philo)
+int	eat(t_philo *philo)
 {
-	if (philo->last_meal
-		&& (timestamp(philo->sim)
-			- (philo->last_meal + philo->sim->time_eat + philo->sim->time_sleep)
-			<= 200)
-	)
-		return (0);
-	return (1);
+	int		left_idx;
+	int		right_idx;
+
+	left_idx = philo->n - 1;
+	right_idx = philo->n - 2;
+	if (right_idx < 0)
+		right_idx += philo->sim->num_philos;
+	if (right_idx == left_idx)
+		return (die(philo, philo->time_to_die));
+	if (philo->n % 2)
+		return (indulge_gluttony(philo, right_idx, left_idx));
+	else
+		return (indulge_gluttony(philo, left_idx, right_idx));
+}
+
+int	indulge_gluttony(t_philo *philo, int first, int second)
+{
+	if (first == second)
+		return (1);
+	if (philo->sim->fork[first] && philo->sim->fork[second])
+	{
+		if (grab_fork(philo, first) || grab_fork(philo, second)
+			|| stuff_face(philo)
+			|| return_fork(philo, second) || return_fork(philo, first))
+			return (1);
+	}
+	return (0);
 }
 
 int	grab_fork(t_philo *philo, int idx)
@@ -41,8 +60,6 @@ int	stuff_face(t_philo *philo)
 	long		eat_time;
 	long		time_to_eat;
 
-	if (kick_the_bucket(philo, 0))
-		return (1);
 	philo->activity = EATING;
 	eat_time = timestamp(philo->sim);
 	time_to_eat = philo->sim->time_eat;
@@ -64,19 +81,5 @@ int	return_fork(t_philo *philo, int idx)
 	else
 		philo->has_fork_idx2 = -1;
 	pthread_mutex_unlock(philo->sim->m_fork[idx]);
-	return (0);
-}
-
-int	indulge_gluttony(t_philo *philo, int first, int second)
-{
-	if (kick_the_bucket(philo, 0) || (first == second))
-		return (1);
-	if (philo->sim->fork[first] && philo->sim->fork[second])
-	{
-		if (grab_fork(philo, first) || grab_fork(philo, second)
-			|| stuff_face(philo)
-			|| return_fork(philo, second) || return_fork(philo, first))
-			return (1);
-	}
 	return (0);
 }

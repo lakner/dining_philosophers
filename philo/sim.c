@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 16:37:18 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/14 18:22:46 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/14 21:29:48 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	release_philos(t_sim *sim)
 	int	i;
 
 	i = 0;
+	pthread_mutex_lock(&(sim->m_start));
 	while (i < sim->num_philos)
 	{
 		pthread_create(&(sim->philo[i].thread), NULL,
@@ -26,6 +27,7 @@ void	release_philos(t_sim *sim)
 	sim->time_start = 0;
 	sim->time_start = timestamp(sim);
 	sim->sim_has_started = 1;
+	pthread_mutex_unlock(&(sim->m_start));
 }
 
 void	wait_for_the_end(t_sim *sim)
@@ -50,6 +52,7 @@ void	close_mutexes(t_sim *sim)
 		pthread_mutex_destroy(&(sim->m_dead));
 		pthread_mutex_destroy(&(sim->m_full));
 		pthread_mutex_destroy(&(sim->m_speak));
+		pthread_mutex_destroy(&(sim->m_start));
 		while (i < sim->num_philos)
 		{
 			pthread_mutex_destroy(sim->m_fork[i]);
