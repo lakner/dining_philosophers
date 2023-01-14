@@ -16,9 +16,9 @@ void	say(t_philo *philo, long timestamp, char *msg)
 {
 	if (kick_the_bucket(philo, 0))
 		return ;
-	pthread_mutex_lock(&(philo->sim->m_speak));
+	pthread_mutex_lock(&(philo->sim->m_dead));
 	printf("%012ld %d %s\n", timestamp, philo->n, msg);
-	pthread_mutex_unlock(&(philo->sim->m_speak));
+	pthread_mutex_unlock(&(philo->sim->m_dead));
 }
 
 int	think(t_philo *philo)
