@@ -1,9 +1,13 @@
 NAME	=	philo
 SRCS	=	philosophers.c \
+			read_args.c \
+			init_sim.c \
 			sim.c \
+			time.c \
 			eat_sleep_die.c \
-			parse.c \
-			error.c
+			eat.c \
+			die.c \
+			error.c 
 
 ODIR	= obj
 OBJS    = $(addprefix $(ODIR)/, $(SRCS:.c=.o))
@@ -27,7 +31,7 @@ $(ODIR):
 $(ODIR)/%.o: %.c $(ODIR)
 	@$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 
-$(NAME): $(OBJS) 
+$(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LFLAGS) $(IFLAGS) -o $(NAME)
 
 clean:
