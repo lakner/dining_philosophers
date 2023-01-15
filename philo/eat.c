@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 18:32:25 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/14 23:04:03 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/15 19:26:54 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,16 @@ int	eat(t_philo *philo)
 	int		left_idx;
 	int		right_idx;
 
+	if (philo->sim->blocked_philo == philo->n)
+	{
+		pthread_mutex_lock(&(philo->sim->m_firstlast));
+		if (philo->n == 1)
+			philo->sim->blocked_philo = philo->sim->num_philos;
+		else
+			philo->sim->blocked_philo = 1;
+		pthread_mutex_unlock(&(philo->sim->m_firstlast));
+		return (0);
+	}
 	left_idx = philo->n - 1;
 	right_idx = philo->n - 2;
 	if (right_idx < 0)

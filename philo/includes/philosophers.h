@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 20:27:36 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/14 22:47:26 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/15 19:15:11 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,12 @@ typedef struct s_simulation{
 	pthread_mutex_t	m_start;
 	long			time_start;
 	int				sim_has_started;
+	pthread_mutex_t	m_firstlast;
 	long			time_die;
 	long			time_eat;
 	long			time_sleep;
 	int				must_eat_times;
+	int				blocked_philo;
 }	t_sim;
 
 /* philosophers.c */

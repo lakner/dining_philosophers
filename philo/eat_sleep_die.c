@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 16:13:29 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/14 23:18:30 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/15 19:17:32 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	think(t_philo *philo)
 		say(philo, timestamp(philo->sim) / 1000, "is thinking.");
 		philo->activity = THINKING;
 	}
-	while ((!*(philo->fork_left) || !*(philo->fork_right)))
+	while (!*(philo->fork_left) || !*(philo->fork_right))
 	{
 		if (kick_the_bucket(philo, 0))
 			return (1);
