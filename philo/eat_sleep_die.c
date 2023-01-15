@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 16:13:29 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/15 19:17:32 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/15 21:13:26 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	think(t_philo *philo)
 	}
 	while (!*(philo->fork_left) || !*(philo->fork_right))
 	{
-		if (kick_the_bucket(philo, 0))
+		if (kick_the_bucket(philo, 50))
 			return (1);
 		wait_for(philo->sim, 50);
 	}
@@ -41,16 +41,13 @@ int	think(t_philo *philo)
 
 int	nap(t_philo *philo)
 {
-	int	time_sleep;
-
-	time_sleep = philo->sim->time_sleep;
 	if (philo->activity == EATING)
 	{
 		philo->activity = SLEEPING;
 		say(philo, timestamp(philo->sim) / 1000, "is sleeping.");
 		if (kick_the_bucket(philo, philo->sim->time_sleep))
 			return (1);
-		wait_for(philo->sim, time_sleep);
+		wait_for(philo->sim, philo->sim->time_sleep);
 	}
 	return (0);
 }
@@ -66,7 +63,7 @@ int	feast(t_philo *philo)
 		pthread_mutex_lock(&(philo->sim->m_full));
 		philo->sim->num_philos_full ++;
 		pthread_mutex_unlock(&(philo->sim->m_full));
-		return (1);
+		return (0);
 	}
 	if (nap(philo))
 		return (1);
@@ -83,7 +80,7 @@ void	*eat_sleep_die(void *arg)
 	while (!(philo->sim->sim_has_started))
 		wait_for(philo->sim, 1);
 	if (!(philo->n % 2))
-		wait_for(philo->sim, philo->sim->time_eat / 2);
+		wait_for(philo->sim, philo->sim->time_eat/10);
 	while (philo && philo->sim && !kick_the_bucket(philo, 0))
 	{
 		if (feast(philo))
