@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 17:02:10 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/19 23:31:49 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/19 23:45:24 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	wellness_check(t_sim *sim)
 	while (n < sim->num_philos)
 	{
 		pthread_mutex_lock(&(sim->m_full));
-		if (sim->num_philos && sim->num_philos_full < sim->num_philos)
+		if (sim->num_philos && sim->num_philos_full == sim->num_philos)
 		{
 			pthread_mutex_unlock(&(sim->m_full));
 			return (1);
