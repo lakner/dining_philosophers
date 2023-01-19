@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 20:27:36 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/19 18:19:14 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/19 18:55:00 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,6 @@
 # include <pthread.h>
 # include <sys/time.h>
 # include <unistd.h>
-
-# define EATING		1
-# define SLEEPING 	2
-# define THINKING	3
 
 struct	s_simulation;
 

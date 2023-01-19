@@ -16,7 +16,6 @@ CC		= cc
 CFLAGS	= -Wall -Wextra -Werror -O0 -g3
 
 IFLAGS	= -Iincludes
-LEAKFLAGS = -LLeakSanitizer -llsan -lc++
 
 print-%: 
 	@echo $* = $($*)
@@ -25,10 +24,8 @@ CC = clang
 			
 all: $(NAME)
 
-$(ODIR):
+$(ODIR)/%.o: %.c
 	mkdir -p $(ODIR)
-
-$(ODIR)/%.o: %.c $(ODIR)
 	@$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
@@ -42,7 +39,5 @@ fclean: clean
 
 re: fclean all
 
-debug: $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LFLAGS) $(IFLAGS) -o fractol -fsanitize=address $(LEAKFLAGS)
 
 .SUFFIXES = 

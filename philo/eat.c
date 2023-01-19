@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 18:32:25 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/19 18:17:17 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/19 19:46:26 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,16 @@ int	eat(t_philo *philo)
 
 int	indulge_gluttony(t_philo *philo, int first, int second)
 {
+	int	ret;
+
 	if (first == second)
 		return (1);
-	if (grab_fork(philo, first) || grab_fork(philo, second)
-		|| stuff_face(philo)
-		|| return_fork(philo, second) || return_fork(philo, first))
-		return (1);
-	return (0);
+	grab_fork(philo, first);
+	grab_fork(philo, second);
+	ret = stuff_face(philo);
+	return_fork(philo, second);
+	return_fork(philo, first);
+	return (ret);
 }
 
 int	grab_fork(t_philo *philo, int idx)
