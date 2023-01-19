@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 17:02:10 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/15 20:31:37 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/19 18:16:59 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,12 @@ void	prepare_philos(t_sim *sim)
 		sim->philo[i].n = i + 1;
 		sim->philo[i].time_to_die = sim->time_die;
 		sim->philo[i].ate_n_times = 0;
-		sim->philo[i].just_ate = 0;
 		sim->philo[i].fork_left = NULL;
 		sim->philo[i].fork_right = NULL;
 		sim->philo[i].has_fork_idx1 = -1;
 		sim->philo[i].has_fork_idx2 = -1;
 		sim->philo[i].dead = 0;
 		sim->philo[i].last_meal = 0;
-		sim->philo[i].activity = SLEEPING;
 		sim->philo[i].sim = sim;
 		i++;
 	}

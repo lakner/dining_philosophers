@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 16:13:29 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/15 21:13:26 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/19 18:18:29 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,32 +23,23 @@ void	say(t_philo *philo, long timestamp, char *msg)
 
 int	think(t_philo *philo)
 {
-	if (kick_the_bucket(philo, 0))
-		return (1);
-	if (philo->activity != THINKING)
-	{
-		say(philo, timestamp(philo->sim) / 1000, "is thinking.");
-		philo->activity = THINKING;
-	}
-	while (!*(philo->fork_left) || !*(philo->fork_right))
-	{
-		if (kick_the_bucket(philo, 50))
-			return (1);
-		wait_for(philo->sim, 50);
-	}
+	say(philo, timestamp(philo->sim) / 1000, "is thinking.");
+
+	// while (!*(philo->fork_left) || !*(philo->fork_right))
+	// {
+	// 	if (kick_the_bucket(philo, 50))
+	// 		return (1);
+	// 	wait_for(philo->sim, 50);
+	// }
 	return (0);
 }
 
 int	nap(t_philo *philo)
 {
-	if (philo->activity == EATING)
-	{
-		philo->activity = SLEEPING;
-		say(philo, timestamp(philo->sim) / 1000, "is sleeping.");
-		if (kick_the_bucket(philo, philo->sim->time_sleep))
-			return (1);
-		wait_for(philo->sim, philo->sim->time_sleep);
-	}
+	say(philo, timestamp(philo->sim) / 1000, "is sleeping.");
+	if (kick_the_bucket(philo, philo->sim->time_sleep))
+		return (1);
+	wait_for(philo->sim, philo->sim->time_sleep);
 	return (0);
 }
 

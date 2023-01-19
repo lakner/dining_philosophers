@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 20:27:36 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/15 19:15:11 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/19 18:19:14 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,10 @@ typedef struct s_philo{
 	int					n;
 	int					time_to_die;
 	int					ate_n_times;
-	int					just_ate;
 	int					*fork_left;
 	int					*fork_right;
 	int					has_fork_idx1;
 	int					has_fork_idx2;
-	int					activity;
 	int					last_meal;
 	int					dead;
 	struct s_simulation	*sim;

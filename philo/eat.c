@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 18:32:25 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/15 21:08:52 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/19 18:17:17 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,9 @@ int	stuff_face(t_philo *philo)
 	long		eat_time;
 	long		time_to_eat;
 
-	philo->activity = EATING;
 	eat_time = timestamp(philo->sim);
 	time_to_eat = philo->sim->time_eat;
 	philo->last_meal = eat_time;
-	philo->just_ate = 1;
 	say(philo, timestamp(philo->sim) / 1000, "is eating.");
 	if (kick_the_bucket(philo, time_to_eat))
 		return (1);
