@@ -45,8 +45,6 @@ int	nap(t_philo *philo)
 
 int	feast(t_philo *philo)
 {
-	if (think(philo))
-		return (1);
 	if (eat(philo))
 		return (1);
 	if (philo->ate_n_times == philo->sim->must_eat_times)
@@ -57,6 +55,8 @@ int	feast(t_philo *philo)
 		return (0);
 	}
 	if (nap(philo))
+		return (1);
+	if (think(philo))
 		return (1);
 	return (0);
 }
