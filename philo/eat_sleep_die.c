@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 16:13:29 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/19 23:35:56 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/19 23:21:41 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,14 @@ int	feast(t_philo *philo)
 {
 	if (eat(philo))
 		return (1);
+	pthread_mutex_lock(&(philo->sim->m_full));
+	if (philo->ate_n_times == philo->sim->must_eat_times)
+	{
+		philo->sim->num_philos_full ++;
+		pthread_mutex_unlock(&(philo->sim->m_full));
+		return (0);
+	}
+	pthread_mutex_unlock(&(philo->sim->m_full));
 	if (nap(philo))
 		return (1);
 	if (think(philo))
