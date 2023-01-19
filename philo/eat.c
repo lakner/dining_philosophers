@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 18:32:25 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/19 20:44:42 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/19 20:59:02 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	eat(t_philo *philo)
 	if (right_idx < 0)
 		right_idx += philo->sim->num_philos;
 	if (right_idx == left_idx)
-		return (die(philo, philo->time_to_die));
+		return (1);
 	return (indulge_gluttony(philo, left_idx, right_idx));
 }
 

@@ -25,7 +25,7 @@ CC = clang
 all: $(NAME)
 
 $(ODIR)/%.o: %.c
-	mkdir -p $(ODIR)
+	@mkdir -p $(ODIR)
 	@$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)

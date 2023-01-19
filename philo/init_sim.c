@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 17:02:10 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/19 20:42:40 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/19 20:57:43 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,7 @@ int	wellness_check(t_sim *sim)
 	{
 		if (timestamp(sim) - sim->philo[n].last_meal > sim->time_die)
 		{
-			pthread_mutex_lock(&(sim->m_dead));
-			die(&(sim->philo[n]), 0);
-			pthread_mutex_unlock(&(sim->m_dead));
+			kick_the_bucket(&(sim->philo[n]), 0);
 			return (1);
 		}
 		n ++;
