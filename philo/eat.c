@@ -23,8 +23,7 @@ int	eat(t_philo *philo)
 		right_idx += philo->sim->num_philos;
 	if (right_idx == left_idx)
 		return (die(philo, philo->time_to_die));
-	if (philo->n % 2)
-	//if (philo->n == 1)
+	if (philo->n == 1)
 		return (indulge_gluttony(philo, right_idx, left_idx));
 	else
 		return (indulge_gluttony(philo, left_idx, right_idx));
