@@ -13,14 +13,12 @@ ODIR	= obj
 OBJS    = $(addprefix $(ODIR)/, $(SRCS:.c=.o))
 
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -O0 -g3
+CFLAGS	= -Wall -Wextra -Werror -fsanitize=thread
 
 IFLAGS	= -Iincludes
 
 print-%: 
 	@echo $* = $($*)
-
-CC = clang
 			
 all: $(NAME)
 
@@ -32,7 +30,7 @@ $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LFLAGS) $(IFLAGS) -o $(NAME)
 
 clean:
-	rm -rf $(OBJDIR)/$(OBJS)
+	rm -rf $(ODIR)/$(OBJS)
 
 fclean: clean
 	rm -rf $(NAME)

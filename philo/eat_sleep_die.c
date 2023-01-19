@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 16:13:29 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/19 20:43:51 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/19 23:21:41 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,14 @@ int	feast(t_philo *philo)
 {
 	if (eat(philo))
 		return (1);
+	pthread_mutex_lock(&(philo->sim->m_full));
 	if (philo->ate_n_times == philo->sim->must_eat_times)
 	{
-		pthread_mutex_lock(&(philo->sim->m_full));
 		philo->sim->num_philos_full ++;
 		pthread_mutex_unlock(&(philo->sim->m_full));
 		return (0);
 	}
+	pthread_mutex_unlock(&(philo->sim->m_full));
 	if (nap(philo))
 		return (1);
 	if (think(philo))
@@ -62,7 +63,7 @@ void	*eat_sleep_die(void *arg)
 		wait_for(philo->sim, 1);
 	if (!(philo->n % 2))
 		wait_for(philo->sim, philo->sim->time_eat / 10);
-	while (philo && philo->sim && !philo->sim->philo_dead)
+	while (philo && philo->sim)
 	{
 		if (feast(philo))
 			return (NULL);

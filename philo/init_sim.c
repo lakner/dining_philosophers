@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 17:02:10 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/19 20:57:43 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/19 23:31:49 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,11 @@ int	sim_table(t_sim *sim)
 	prepare_philos(sim);
 	prepare_forks(sim);
 	release_philos(sim);
-	while (!sim->philo_dead && sim->num_philos
-		&& sim->num_philos_full < sim->num_philos)
-		wellness_check(sim);
+	while (1)
+	{
+		if (wellness_check(sim))
+			break ;
+	}
 	wait_for_the_end(sim);
 	free_sim(sim);
 	return (0);
@@ -53,11 +55,19 @@ int	wellness_check(t_sim *sim)
 	n = 0;
 	while (n < sim->num_philos)
 	{
+		pthread_mutex_lock(&(sim->m_full));
+		if (sim->num_philos && sim->num_philos_full < sim->num_philos)
+		{
+			pthread_mutex_unlock(&(sim->m_full));
+			return (1);
+		}
 		if (timestamp(sim) - sim->philo[n].last_meal > sim->time_die)
 		{
 			kick_the_bucket(&(sim->philo[n]), 0);
+			pthread_mutex_unlock(&(sim->m_full));
 			return (1);
 		}
+		pthread_mutex_unlock(&(sim->m_full));
 		n ++;
 	}
 	return (0);
