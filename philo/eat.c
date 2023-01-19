@@ -34,16 +34,10 @@ int	indulge_gluttony(t_philo *philo, int first, int second)
 {
 	if (first == second)
 		return (1);
-	if (philo->sim->fork[first] && philo->sim->fork[second]
-		&& philo->n != philo->sim->blocked_philo)
-	{
-		if (grab_fork(philo, first) || grab_fork(philo, second)
-			|| stuff_face(philo)
-			|| return_fork(philo, second) || return_fork(philo, first))
-			return (1);
-	}
-	else
-		wait_for(philo->sim, philo->sim->time_eat);
+	if (grab_fork(philo, first) || grab_fork(philo, second)
+		|| stuff_face(philo)
+		|| return_fork(philo, second) || return_fork(philo, first))
+		return (1);
 	return (0);
 }
 
