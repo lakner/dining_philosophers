@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 18:32:25 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/19 19:46:26 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/19 20:44:42 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@ int	eat(t_philo *philo)
 		right_idx += philo->sim->num_philos;
 	if (right_idx == left_idx)
 		return (die(philo, philo->time_to_die));
-	if (philo->n == 1)
-		return (indulge_gluttony(philo, right_idx, left_idx));
-	else
-		return (indulge_gluttony(philo, left_idx, right_idx));
+	return (indulge_gluttony(philo, left_idx, right_idx));
 }
 
 int	indulge_gluttony(t_philo *philo, int first, int second)
@@ -64,8 +61,6 @@ int	stuff_face(t_philo *philo)
 	time_to_eat = philo->sim->time_eat;
 	philo->last_meal = eat_time;
 	say(philo, timestamp(philo->sim) / 1000, "is eating.");
-	if (kick_the_bucket(philo, time_to_eat))
-		return (1);
 	wait_for(philo->sim, time_to_eat);
 	philo->ate_n_times++;
 	return (0);

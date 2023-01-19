@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 20:27:36 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/19 18:55:00 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/19 20:32:17 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int		ft_atoi(const char *str);
 /* init_sim.c */
 t_sim	*init_sim(int num_ph, int time_die, int time_eat, int time_sl);
 int		sim_table(t_sim *sim);
+int		wellness_check(t_sim *sim);
 void	prepare_philos(t_sim *sim);
 void	prepare_forks(t_sim *sim);
 

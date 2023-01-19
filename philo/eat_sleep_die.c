@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 16:13:29 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/19 19:58:06 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/19 20:43:51 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ int	think(t_philo *philo)
 int	nap(t_philo *philo)
 {
 	say(philo, timestamp(philo->sim) / 1000, "is sleeping.");
-	if (kick_the_bucket(philo, philo->sim->time_sleep))
-		return (1);
 	wait_for(philo->sim, philo->sim->time_sleep);
 	return (0);
 }
@@ -64,7 +62,7 @@ void	*eat_sleep_die(void *arg)
 		wait_for(philo->sim, 1);
 	if (!(philo->n % 2))
 		wait_for(philo->sim, philo->sim->time_eat / 10);
-	while (philo && philo->sim && !kick_the_bucket(philo, 0))
+	while (philo && philo->sim && !philo->sim->philo_dead)
 	{
 		if (feast(philo))
 			return (NULL);
