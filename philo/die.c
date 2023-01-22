@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 18:29:39 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/22 19:20:03 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/22 19:57:34 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,6 @@ int	kick_the_bucket(t_philo *philo)
 	pthread_mutex_lock(&(philo->sim->m_dead));
 	die(philo,
 		(philo->last_meal + philo->time_to_die) - timestamp(philo->sim));
-	return_fork(philo,
-		(philo->n - 1 + philo->sim->num_philos) % philo->sim->num_philos);
-	return_fork(philo,
-		(philo->n - 2 + philo->sim->num_philos) % philo->sim->num_philos);
 	pthread_mutex_unlock(&(philo->sim->m_dead));
 	return (0);
 }
