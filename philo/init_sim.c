@@ -38,7 +38,7 @@ int	sim_table(t_sim *sim)
 	prepare_philos(sim);
 	prepare_forks(sim);
 	release_philos(sim);
-	while (1)
+	while (sim->num_philos)
 	{
 		if (wellness_check(sim))
 			break ;
@@ -63,8 +63,8 @@ int	wellness_check(t_sim *sim)
 		}
 		if (timestamp(sim) - sim->philo[n].last_meal > sim->time_die)
 		{
-			kick_the_bucket(&(sim->philo[n]), 0);
 			pthread_mutex_unlock(&(sim->m_full));
+			kick_the_bucket(&(sim->philo[n]), 0);
 			return (1);
 		}
 		pthread_mutex_unlock(&(sim->m_full));
