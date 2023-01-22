@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 18:32:25 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/22 19:59:51 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/22 19:20:37 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,8 @@ int	indulge_gluttony(t_philo *philo, int first, int second)
 
 	if (first == second)
 		return (1);
-	if (philo->n == philo->sim->num_philos)
-	{
-		grab_fork(philo, second);
-		grab_fork(philo, first);
-	}
-	else
-	{
-		grab_fork(philo, first);
-		grab_fork(philo, second);
-	}
+	grab_fork(philo, first);
+	grab_fork(philo, second);
 	ret = stuff_face(philo);
 	return_fork(philo, second);
 	return_fork(philo, first);
