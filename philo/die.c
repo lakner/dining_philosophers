@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 18:29:39 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/22 17:39:59 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/22 19:20:03 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,15 @@ int	die(t_philo *philo, int time_wait)
 	return (0);
 }
 
-int	kick_the_bucket(t_philo *philo, int time_wait)
+int	kick_the_bucket(t_philo *philo)
 {
 	pthread_mutex_lock(&(philo->sim->m_dead));
-	pthread_mutex_lock(&(philo->sim->m_full));
-	if ((timestamp(philo->sim) + time_wait)
-		> (philo->last_meal + philo->time_to_die))
-	{
-		die(philo,
-			(philo->last_meal + philo->time_to_die) - timestamp(philo->sim));
-		pthread_mutex_unlock(&(philo->sim->m_full));
-		pthread_mutex_unlock(&(philo->sim->m_dead));
-		if (philo->has_fork_idx1 >= 0)
-			return_fork(philo, philo->has_fork_idx1);
-		if (philo->has_fork_idx2 >= 0)
-			return_fork(philo, philo->has_fork_idx2);
-		return (1);
-	}
-	pthread_mutex_unlock(&(philo->sim->m_full));
+	die(philo,
+		(philo->last_meal + philo->time_to_die) - timestamp(philo->sim));
+	return_fork(philo,
+		(philo->n - 1 + philo->sim->num_philos) % philo->sim->num_philos);
+	return_fork(philo,
+		(philo->n - 2 + philo->sim->num_philos) % philo->sim->num_philos);
 	pthread_mutex_unlock(&(philo->sim->m_dead));
 	return (0);
 }

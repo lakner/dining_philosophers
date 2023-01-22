@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 16:13:29 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/22 17:42:21 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/22 19:17:57 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,13 @@ int	nap(t_philo *philo)
 
 int	feast(t_philo *philo)
 {
+	pthread_mutex_lock(&(philo->sim->m_dead));
+	if (philo->sim->philo_dead)
+	{
+		pthread_mutex_unlock(&(philo->sim->m_dead));
+		return (1);
+	}
+	pthread_mutex_unlock(&(philo->sim->m_dead));
 	if (eat(philo))
 		return (1);
 	pthread_mutex_lock(&(philo->sim->m_full));

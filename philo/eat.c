@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 18:32:25 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/22 17:44:41 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/22 19:20:37 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,7 @@ int	indulge_gluttony(t_philo *philo, int first, int second)
 int	grab_fork(t_philo *philo, int idx)
 {
 	pthread_mutex_lock(philo->sim->m_fork[idx]);
-	if (philo->has_fork_idx1 < 0)
-		philo->has_fork_idx1 = idx;
-	else
-		philo->has_fork_idx2 = idx;
 	say(philo, timestamp(philo->sim) / 1000, "has taken a fork.");
-	philo->sim->fork[idx] = 0;
 	return (0);
 }
 
@@ -70,13 +65,6 @@ int	stuff_face(t_philo *philo)
 
 int	return_fork(t_philo *philo, int idx)
 {
-	pthread_mutex_lock(&(philo->sim->m_full));
-	philo->sim->fork[idx] = 1;
-	if (philo->has_fork_idx1 >= 0)
-		philo->has_fork_idx1 = -1;
-	else
-		philo->has_fork_idx2 = -1;
-	pthread_mutex_unlock(&(philo->sim->m_full));
 	pthread_mutex_unlock(philo->sim->m_fork[idx]);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 20:27:36 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/22 18:17:09 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/22 19:14:56 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int		indulge_gluttony(t_philo *philo, int first, int second);
 
 /* die.c */
 int		die(t_philo *philo, int time_wait);
-int		kick_the_bucket(t_philo *philo, int time_wait);
+int		kick_the_bucket(t_philo *philo);
 
 /* error.c */
 void	error_exit(t_sim *sim, int code, char *errstr);
