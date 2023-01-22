@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 16:37:18 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/19 20:09:38 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/22 18:18:04 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,7 @@ void	close_mutexes(t_sim *sim)
 	{
 		pthread_mutex_destroy(&(sim->m_dead));
 		pthread_mutex_destroy(&(sim->m_full));
-		pthread_mutex_destroy(&(sim->m_speak));
 		pthread_mutex_destroy(&(sim->m_start));
-		pthread_mutex_destroy(&(sim->m_firstlast));
 		while (i < sim->num_philos)
 		{
 			pthread_mutex_destroy(sim->m_fork[i]);
