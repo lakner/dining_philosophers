@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 18:32:25 by slakner           #+#    #+#             */
-/*   Updated: 2023/02/03 18:06:31 by slakner          ###   ########.fr       */
+/*   Updated: 2023/02/03 19:44:19 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,15 @@ int	grab_fork(t_philo *philo, int idx)
 
 int	stuff_face(t_philo *philo)
 {
-	long		time_to_eat;
+	long	time_to_eat;
+	long	mealtime;	
 
-	time_to_eat = philo->sim->time_eat;
 	pthread_mutex_lock(&(philo->sim->m_full));
+	time_to_eat = philo->sim->time_eat;
 	philo->last_meal = timestamp(philo->sim);
+	mealtime = philo->last_meal;
 	pthread_mutex_unlock(&(philo->sim->m_full));
-	say(philo, timestamp(philo->sim) / 1000, "is eating.");
+	say(philo, mealtime / 1000, "is eating.");
 	wait_for(philo->sim, time_to_eat);
 	pthread_mutex_lock(&(philo->sim->m_full));
 	philo->ate_n_times++;
