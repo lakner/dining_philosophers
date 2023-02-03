@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 17:02:10 by slakner           #+#    #+#             */
-/*   Updated: 2023/01/22 19:14:38 by slakner          ###   ########.fr       */
+/*   Updated: 2023/01/22 22:17:45 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_sim	*init_sim(int num_ph, int time_die, int time_eat, int time_sl)
 	sim->time_eat = time_eat * 1000;
 	sim->time_sleep = time_sl * 1000;
 	sim->sim_has_started = 0;
+	sim->philo_dead = 0;
 	return (sim);
 }
 
