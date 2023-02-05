@@ -6,7 +6,7 @@
 /*   By: stephanie.lakner <stephanie.lakner@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 15:57:57 by slakner           #+#    #+#             */
-/*   Updated: 2023/02/05 18:47:22 by stephanie.l      ###   ########.fr       */
+/*   Updated: 2023/02/05 19:44:54 by stephanie.l      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	if (argc == 6 && !sim->must_eat_times)
+	{
+		free(sim);
 		return (0);
+	}
 	return (sim_table(sim));
 }
 
