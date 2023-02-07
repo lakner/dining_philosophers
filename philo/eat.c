@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 18:32:25 by slakner           #+#    #+#             */
-/*   Updated: 2023/02/03 19:44:19 by slakner          ###   ########.fr       */
+/*   Updated: 2023/02/07 20:00:44 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	indulge_gluttony(t_philo *philo, int first, int second)
 int	grab_fork(t_philo *philo, int idx)
 {
 	pthread_mutex_lock(philo->sim->m_fork[idx]);
-	say(philo, timestamp(philo->sim) / 1000, "has taken a fork.");
+	say(philo, timestamp(philo->sim) / 1000, "has taken a fork");
 	return (0);
 }
 
@@ -68,7 +68,7 @@ int	stuff_face(t_philo *philo)
 	philo->last_meal = timestamp(philo->sim);
 	mealtime = philo->last_meal;
 	pthread_mutex_unlock(&(philo->sim->m_full));
-	say(philo, mealtime / 1000, "is eating.");
+	say(philo, mealtime / 1000, "is eating");
 	wait_for(philo->sim, time_to_eat);
 	pthread_mutex_lock(&(philo->sim->m_full));
 	philo->ate_n_times++;
