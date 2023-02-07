@@ -6,7 +6,7 @@
 /*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 16:13:29 by slakner           #+#    #+#             */
-/*   Updated: 2023/02/03 19:39:32 by slakner          ###   ########.fr       */
+/*   Updated: 2023/02/07 20:00:34 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ void	say(t_philo *philo, long timestamp, char *msg)
 
 int	think(t_philo *philo)
 {
-	say(philo, timestamp(philo->sim) / 1000, "is thinking.");
+	say(philo, timestamp(philo->sim) / 1000, "is thinking");
 	return (0);
 }
 
 int	nap(t_philo *philo)
 {
-	say(philo, timestamp(philo->sim) / 1000, "is sleeping.");
+	say(philo, timestamp(philo->sim) / 1000, "is sleeping");
 	wait_for(philo->sim, philo->sim->time_sleep);
 	return (0);
 }
