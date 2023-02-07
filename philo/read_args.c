@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   read_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stephanie.lakner <stephanie.lakner@stud    +#+  +:+       +#+        */
+/*   By: slakner <slakner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 16:02:22 by slakner           #+#    #+#             */
-/*   Updated: 2023/02/05 18:46:30 by stephanie.l      ###   ########.fr       */
+/*   Updated: 2023/02/07 20:02:43 by slakner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+#include "limits.h"
 
 t_sim	*read_args(int argc, char **argv)
 {
@@ -55,7 +56,7 @@ int	is_whitespace(const char *c)
 
 int	ft_atoi(const char *str)
 {
-	int	number;
+	long int	number;
 	int	digit;
 	int	i;
 	int	positive_negative;
@@ -77,5 +78,7 @@ int	ft_atoi(const char *str)
 		number = number * 10 + digit;
 		i++;
 	}
+	if (number > INT_MAX)
+		return (INT_MAX);
 	return (number * positive_negative);
 }
